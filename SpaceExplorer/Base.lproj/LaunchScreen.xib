@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bg_parallax_stars_1536x3840.png" translatesAutoresizingMaskIntoConstraints="NO" id="KyB-n5-dzX">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0wH-VO-bwr">
+                    <rect key="frame" x="187" y="222" width="106" height="32"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="32" id="9db-Rc-oqK"/>
+                        <constraint firstAttribute="width" constant="106" id="qn4-dF-Hgw"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright 2015 Andrew Schools.  All rights reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9nH-RP-mkZ">
+                    <rect key="frame" x="89" y="262" width="302" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="302" id="aCj-tb-eQ6"/>
+                        <constraint firstAttribute="height" constant="21" id="hgg-zG-cI3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Little Space Explorer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="udh-mq-kfk">
+                    <rect key="frame" x="50" y="129" width="380" height="101"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="101" id="8VL-6G-PoW"/>
+                        <constraint firstAttribute="width" constant="380" id="iai-KI-y86"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="0wH-VO-bwr" firstAttribute="centerY" secondItem="KyB-n5-dzX" secondAttribute="centerY" constant="-2" id="5og-6c-JvG"/>
+                <constraint firstAttribute="trailing" secondItem="KyB-n5-dzX" secondAttribute="trailing" id="7EM-61-pzy"/>
+                <constraint firstItem="KyB-n5-dzX" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Fvx-9c-dDQ"/>
+                <constraint firstItem="KyB-n5-dzX" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="GdA-eU-BjB"/>
+                <constraint firstItem="udh-mq-kfk" firstAttribute="centerX" secondItem="KyB-n5-dzX" secondAttribute="centerX" id="Vp6-34-xDF"/>
+                <constraint firstItem="9nH-RP-mkZ" firstAttribute="centerX" secondItem="KyB-n5-dzX" secondAttribute="centerX" id="dCj-lq-WFG"/>
+                <constraint firstItem="0wH-VO-bwr" firstAttribute="centerX" secondItem="KyB-n5-dzX" secondAttribute="centerX" id="foj-tg-yDO"/>
+                <constraint firstItem="9nH-RP-mkZ" firstAttribute="top" secondItem="0wH-VO-bwr" secondAttribute="bottom" constant="8" id="rId-N5-hCH"/>
+                <constraint firstAttribute="bottom" secondItem="KyB-n5-dzX" secondAttribute="bottom" id="uC6-af-jtn"/>
+                <constraint firstItem="udh-mq-kfk" firstAttribute="centerY" secondItem="KyB-n5-dzX" secondAttribute="centerY" constant="-60.5" id="zht-GW-dwo"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="477" y="115"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="bg_parallax_stars_1536x3840.png" width="1536" height="3840"/>
+    </resources>
+</document>
