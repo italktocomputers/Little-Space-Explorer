@@ -1,6 +1,6 @@
 Little Space Explorer is a FREE iOS 8.1 game I wrote in Swift.
 
-![alt tag](https://raw.github.com/italktocomputers/Little-Space-Explorer/master/screenshots/iOS Simulator Screen Shot Jul 12, 2015, 9.01.03 AM.png)
+![alt tag](screenshots/iOS Simulator Screen Shot Jul 12, 2015, 9.01.03 AM.png)
 
 Most artwork was provided by Vicki Wenderlich at GameArtGuppy.Com and is covered under a Creative Commons Attribution License. This means that you may copy, distribute, display, and perform the artwork and make derivative works based on it as long as you credit her site.  All other work is covered under The MIT License.
 
