@@ -30,7 +30,6 @@ class StartScene: SKScene {
     
     init(size: CGSize, controller: GameViewController) {
         self.controller = controller
-        
         super.init(size: size)
     }
 
@@ -38,92 +37,149 @@ class StartScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         if self.controller.iAdError == true {
             if self.controller.isLoadingiAd == false {
-                // there was an error loading iAd so let's try again
+                // There was an error loading iAd so let's try again
                 self.controller.loadAds()
             }
-        } else {
-            // we already have loaded iAd so let's just show it
-            self.controller.adBannerView?.hidden = false
+        }
+        else {
+            // We already have loaded iAd so let's just show it
+            self.controller.adBannerView?.isHidden = false
         }
         
-        let highScore = self.helpers.getHighScore("easy")
-        let highScore2 = self.helpers.getHighScore("medium")
-        let highScore3 = self.helpers.getHighScore("hard")
+        let highScore = self.helpers.getHighScore(difficulty: "easy")
+        let highScore2 = self.helpers.getHighScore(difficulty: "medium")
+        let highScore3 = self.helpers.getHighScore(difficulty: "hard")
         
-        let lastScore = self.helpers.getLastScore("easy")
-        let lastScore2 = self.helpers.getLastScore("medium")
-        let lastScore3 = self.helpers.getLastScore("hard")
+        let lastScore = self.helpers.getLastScore(difficulty: "easy")
+        let lastScore2 = self.helpers.getLastScore(difficulty: "medium")
+        let lastScore3 = self.helpers.getLastScore(difficulty: "hard")
         
-        var background = SKSpriteNode(imageNamed:"bg_single_1536x3840")
+        let background = SKSpriteNode(imageNamed:"bg_single_1536x3840")
         
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         self.addChild(background)
         
-        self.addChild(self.helpers.createLabel("Little Space Explorer", fontSize: 42, position: CGPointMake(CGRectGetMidX(self.frame), self.frame.height-175)))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Little Space Explorer",
+                fontSize: 42,
+                position: CGPoint(x: self.frame.midX, y: self.frame.height-175)
+            )
+        )
         
-        self.addChild(self.helpers.createLabel("Help/Info", fontSize: 24, position: CGPointMake(self.frame.width-100, self.frame.height-150), name: "help"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Help/Info",
+                fontSize: 24,
+                position: CGPoint(x: self.frame.width-100, y: self.frame.height-150),
+                name: "help"
+            )
+        )
         
-        self.addEasyButton(highScore, lastScore: lastScore)
-        self.addMediumButton(highScore2, lastScore: lastScore2)
-        self.addHardButton(highScore3, lastScore: lastScore3)
+        self.addEasyButton(highscore: highScore, lastScore: lastScore)
+        self.addMediumButton(highscore: highScore2, lastScore: lastScore2)
+        self.addHardButton(highscore: highScore3, lastScore: lastScore3)
     }
     
     func addEasyButton(highscore: Int, lastScore: Int) {
-        var button = SKSpriteNode(imageNamed:"button")
-        button.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.height-250)
+        let button = SKSpriteNode(imageNamed:"button")
+        button.position = CGPoint(x: self.frame.midX, y: self.frame.height-250)
         button.zPosition = 99
         button.name = "easy"
         
         self.addChild(button)
         
-        self.addChild(self.helpers.createLabel("Easy", fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), button.position.y), name: "easy"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Easy",
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: button.position.y),
+                name: "easy"
+            )
+        )
         
-        self.addChild(self.helpers.createLabel(String(format: "High score: %i | Last Score: %i", highscore, lastScore), fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), button.position.y-25), name: "easy"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: String(format: "High score: %i | Last Score: %i", highscore, lastScore),
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: button.position.y-25),
+                name: "easy"
+            )
+        )
     }
     
     func addMediumButton(highscore: Int, lastScore: Int) {
-        var button = SKSpriteNode(imageNamed:"button")
-        button.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.height-375)
+        let button = SKSpriteNode(imageNamed:"button")
+        button.position = CGPoint(x: self.frame.midX, y: self.frame.height-375)
         button.zPosition = 99
         button.name = "medium"
         
         self.addChild(button)
         
-        self.addChild(self.helpers.createLabel("Medium", fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), button.position.y), name: "medium"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Medium",
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: button.position.y),
+                name: "medium"
+            )
+        )
         
-        self.addChild(self.helpers.createLabel(String(format: "High score: %i | Last Score: %i", highscore, lastScore), fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), button.position.y-25), name: "medium"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: String(format: "High score: %i | Last Score: %i", highscore, lastScore),
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: button.position.y-25),
+                name: "medium"
+            )
+        )
     }
     
     func addHardButton(highscore: Int, lastScore: Int) {
-        var button = SKSpriteNode(imageNamed:"button")
-        button.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.height-500)
+        let button = SKSpriteNode(imageNamed:"button")
+        button.position = CGPoint(x: self.frame.midX, y: self.frame.height-500)
         button.zPosition = 99
         button.name = "hard"
         
         self.addChild(button)
         
-        self.addChild(self.helpers.createLabel("Hard", fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), button.position.y), name: "hard"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Hard",
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: button.position.y),
+                name: "hard"
+            )
+        )
         
-        self.addChild(self.helpers.createLabel(String(format: "High score: %i | Last Score: %i", highscore, lastScore), fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), button.position.y-25), name: "hard"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: String(format: "High score: %i | Last Score: %i", highscore, lastScore),
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: button.position.y-25),
+                name: "hard"
+            )
+        )
     }
-    
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         var difficulty = ""
         var nodeName: String = ""
         
         for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            let node = self.nodeAtPoint(location)
+            let location = touch.location(in:self)
+            let node = self.atPoint(location)
             
-            //if fire button touched, bring the rain
+            // If fire button touched, bring the rain
             if node.name == "medium" {
                 difficulty = "medium"
-            } else if node.name == "hard" {
+            }
+            else if node.name == "hard" {
                 difficulty = "hard"
-            } else if node.name == "easy" {
+            }
+            else if node.name == "easy" {
                 difficulty = "easy"
             }
             
@@ -132,15 +188,16 @@ class StartScene: SKScene {
             }
         }
         
-        // if difficulty is empty, they clicked an ad
+        // If difficulty is empty, they clicked an ad
         if difficulty != "" {
             let gameScene = GameScene(size: self.size, controller: self.controller, difficulty: difficulty)
-            gameScene.scaleMode = .AspectFill
+            gameScene.scaleMode = .aspectFill
             self.view?.presentScene(gameScene)
-        } else {
+        }
+        else {
             if nodeName == "help" {
                 let scene = HelpScene(size: self.size, controller: self.controller)
-                scene.scaleMode = .AspectFill
+                scene.scaleMode = .aspectFill
                 self.view?.presentScene(scene)
             }
         }

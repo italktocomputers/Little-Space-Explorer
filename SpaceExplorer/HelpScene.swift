@@ -33,7 +33,6 @@ class HelpScene: SKScene {
     
     init(size: CGSize, controller: GameViewController) {
         self.controller = controller
-        
         super.init(size: size)
     }
 
@@ -41,18 +40,19 @@ class HelpScene: SKScene {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         if self.controller.iAdError == true {
             if self.controller.isLoadingiAd == false {
-                // there was an error loading iAd so let's try again
+                // There was an error loading iAd so let's try again
                 self.controller.loadAds()
             }
-        } else {
-            // we already have loaded iAd so let's just show it
-            self.controller.adBannerView?.hidden = false
+        }
+        else {
+            // We already have loaded iAd so let's just show it
+            self.controller.adBannerView?.isHidden = false
         }
         
-        var background = SKSpriteNode(imageNamed:"bg_single_1536x3840")
+        let background = SKSpriteNode(imageNamed:"bg_single_1536x3840")
         
         background.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
         self.addChild(background)
@@ -63,20 +63,20 @@ class HelpScene: SKScene {
     }
     
     func addForwardButton() {
-        var node = SKSpriteNode(imageNamed:"Forwardbtn")
+        let node = SKSpriteNode(imageNamed:"Forwardbtn")
         node.xScale = 1.5
         node.yScale = 1.5
-        node.position = CGPointMake(self.frame.width-50, CGRectGetMidY(self.frame))
+        node.position = CGPoint(x: self.frame.width-50, y: self.frame.midY)
         node.zPosition = 1
         node.name = "Forward"
         self.addChild(node)
     }
     
     func addBackButton() {
-        var node = SKSpriteNode(imageNamed:"Backbtn")
+        let node = SKSpriteNode(imageNamed:"Backbtn")
         node.xScale = 1.5
         node.yScale = 1.5
-        node.position = CGPointMake(50, CGRectGetMidY(self.frame))
+        node.position = CGPoint(x: 50, y: self.frame.midY)
         node.zPosition = 1
         node.name = "Back"
         self.addChild(node)
@@ -94,21 +94,34 @@ class HelpScene: SKScene {
         
         var i = 0
         for line in text {
-            self.addChild(self.helpers.createLabel(line, fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), CGFloat((Int(self.frame.height-150))-(i*30))), name: "help_text"))
+            self.addChild(
+                self.helpers.createLabel(
+                    text: line,
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX, y: CGFloat((Int(self.frame.height-150))-(i*30))),
+                    name: "help_text"
+                )
+            )
             
-            i++
+            i+=1
         }
     }
     
     func removeHelpFileNodes() {
-        // we need to hide our first set of nodes
-        self.enumerateChildNodesWithName("help_text", usingBlock: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-            node.removeFromParent()
-        })
+        // We need to hide our first set of nodes
+        self.enumerateChildNodes(
+            withName: "help_text",
+            using: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                node.removeFromParent()
+            }
+        )
         
-        self.enumerateChildNodesWithName("KrazyKoala", usingBlock: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-            node.removeFromParent()
-        })
+        self.enumerateChildNodes(
+            withName: "KrazyKoala",
+            using: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                node.removeFromParent()
+            }
+        )
     }
     
     func showCoin1Info() {
@@ -122,28 +135,36 @@ class HelpScene: SKScene {
         
         for line in text {
             y = CGFloat((Int(self.frame.height-200))-(i*30))
-
+            self.addChild(
+                self.helpers.createLabel(
+                    text: line,
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX-200, y: y),
+                    name: "help_text"
+                )
+            )
             
-            self.addChild(self.helpers.createLabel(line, fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame)-200, y), name: "help_text"))
-            
-            i++
+            i+=1
         }
         
-        var node = SKSpriteNode(imageNamed:"powerup04_1")
-        node.position = CGPointMake(CGRectGetMidX(self.frame)-200, y-35)
+        let node = SKSpriteNode(imageNamed:"powerup04_1")
+        node.position = CGPoint(x: self.frame.midX-200, y: y-35)
         node.name = "help_text"
         
-        // blink so user notices it
+        // Blink so user notices it
         let move1 = SKTexture(imageNamed: "powerup04_1")
         let move2 = SKTexture(imageNamed: "powerup04_2")
         let move3 = SKTexture(imageNamed: "powerup04_3")
         let move4 = SKTexture(imageNamed: "powerup04_4")
         let move5 = SKTexture(imageNamed: "powerup04_5")
         let move6 = SKTexture(imageNamed: "powerup04_6")
-        let moves = SKAction.animateWithTextures([move1, move2, move3, move4, move5, move6], timePerFrame: 0.1)
         
-        node.runAction(SKAction.repeatActionForever(moves), withKey:"move")
+        let moves = SKAction.animate(
+            with: [move1, move2, move3, move4, move5, move6],
+            timePerFrame: 0.1
+        )
         
+        node.run(SKAction.repeatForever(moves), withKey:"move")
         self.addChild(node)
     }
     
@@ -159,13 +180,20 @@ class HelpScene: SKScene {
         for line in text {
             y = CGFloat((Int(self.frame.height-200))-(i*30))
             
-            self.addChild(self.helpers.createLabel(line, fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame)-100, y), name: "help_text"))
+            self.addChild(
+                self.helpers.createLabel(
+                    text: line,
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX-100, y: y),
+                    name: "help_text"
+                )
+            )
             
-            i++
+            i+=1
         }
         
-        var node = SKSpriteNode(imageNamed:"powerup03_1")
-        node.position = CGPointMake(CGRectGetMidX(self.frame)-100, y-35)
+        let node = SKSpriteNode(imageNamed:"powerup03_1")
+        node.position = CGPoint(x: self.frame.midX-100, y: y-35)
         node.name = "help_text"
         
         // blink so user notices it
@@ -175,10 +203,13 @@ class HelpScene: SKScene {
         let move4 = SKTexture(imageNamed: "powerup03_4")
         let move5 = SKTexture(imageNamed: "powerup03_5")
         let move6 = SKTexture(imageNamed: "powerup03_6")
-        let moves = SKAction.animateWithTextures([move1, move2, move3, move4, move5, move6], timePerFrame: 0.1)
         
-        node.runAction(SKAction.repeatActionForever(moves), withKey:"move")
+        let moves = SKAction.animate(
+            with: [move1, move2, move3, move4, move5, move6],
+            timePerFrame: 0.1
+        )
         
+        node.run(SKAction.repeatForever(moves), withKey:"move")
         self.addChild(node)
     }
     
@@ -194,26 +225,36 @@ class HelpScene: SKScene {
         for line in text {
             y = CGFloat((Int(self.frame.height-200))-(i*30))
             
-            self.addChild(self.helpers.createLabel(line, fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame)+100, y), name: "help_text"))
+            self.addChild(
+                self.helpers.createLabel(
+                    text: line,
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX+100, y: y),
+                    name: "help_text"
+                )
+            )
             
-            i++
+            i+=1
         }
         
-        var node = SKSpriteNode(imageNamed:"powerup01_1")
-        node.position = CGPointMake(CGRectGetMidX(self.frame)+100, y-35)
+        let node = SKSpriteNode(imageNamed:"powerup01_1")
+        node.position = CGPoint(x: self.frame.midX+100, y: y-35)
         node.name = "help_text"
         
-        // blink so user notices it
+        // Blink so user notices it
         let move1 = SKTexture(imageNamed: "powerup01_1")
         let move2 = SKTexture(imageNamed: "powerup01_2")
         let move3 = SKTexture(imageNamed: "powerup01_3")
         let move4 = SKTexture(imageNamed: "powerup01_4")
         let move5 = SKTexture(imageNamed: "powerup01_5")
         let move6 = SKTexture(imageNamed: "powerup01_6")
-        let moves = SKAction.animateWithTextures([move1, move2, move3, move4, move5, move6], timePerFrame: 0.1)
         
-        node.runAction(SKAction.repeatActionForever(moves), withKey:"move")
+        let moves = SKAction.animate(
+            with: [move1, move2, move3, move4, move5, move6],
+            timePerFrame: 0.1
+        )
         
+        node.run(SKAction.repeatForever(moves), withKey:"move")
         self.addChild(node)
     }
     
@@ -229,32 +270,49 @@ class HelpScene: SKScene {
         for line in text {
             y = CGFloat((Int(self.frame.height-200))-(i*30))
             
-            self.addChild(self.helpers.createLabel(line, fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame)+200, y), name: "help_text"))
+            self.addChild(
+                self.helpers.createLabel(
+                    text: line,
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX+200, y: y),
+                    name: "help_text"
+                )
+            )
             
-            i++
+            i+=1
         }
         
-        var node = SKSpriteNode(imageNamed:"powerup02_1")
-        node.position = CGPointMake(CGRectGetMidX(self.frame)+200, y-35)
+        let node = SKSpriteNode(imageNamed:"powerup02_1")
+        node.position = CGPoint(x: self.frame.midX+200, y: y-35)
         node.name = "help_text"
         
-        // blink so user notices it
+        // Blink so user notices it
         let move1 = SKTexture(imageNamed: "powerup02_1")
         let move2 = SKTexture(imageNamed: "powerup02_2")
         let move3 = SKTexture(imageNamed: "powerup02_3")
         let move4 = SKTexture(imageNamed: "powerup02_4")
         let move5 = SKTexture(imageNamed: "powerup02_5")
         let move6 = SKTexture(imageNamed: "powerup02_6")
-        let moves = SKAction.animateWithTextures([move1, move2, move3, move4, move5, move6], timePerFrame: 0.1)
         
-        node.runAction(SKAction.repeatActionForever(moves), withKey:"move")
+        let moves = SKAction.animate(
+            with: [move1, move2, move3, move4, move5, move6],
+            timePerFrame: 0.1
+        )
         
+        node.run(SKAction.repeatForever(moves), withKey:"move")
         self.addChild(node)
     }
     
     func showSecondHelpFile() {
         
-        self.addChild(self.helpers.createLabel("Types of coins you can collect:", fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), self.size.height - 150), name: "help_text"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Types of coins you can collect:",
+                fontSize: 24,
+                position: CGPoint(x: self.frame.midX, y: self.size.height - 150),
+                name: "help_text"
+            )
+        )
         
         self.showCoin1Info()
         self.showCoin2Info()
@@ -279,28 +337,49 @@ class HelpScene: SKScene {
         ]
         
         var i = 0
-        var y: CGFloat = 0.0
         
         for line in text {
-            y = CGFloat((Int(self.frame.height-150))-(i*30))
+            self.addChild(
+                self.helpers.createLabel(
+                    text: line,
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX, y: CGFloat((Int(self.frame.height-150))-(i*30))),
+                    name: "help_text"
+                )
+            )
             
-            self.addChild(self.helpers.createLabel(line, fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), CGFloat((Int(self.frame.height-150))-(i*30))), name: "help_text"))
-            
-            i++
+            i+=1
         }
 
     }
     
     func showPageNum() {
-        self.enumerateChildNodesWithName("pageNums", usingBlock: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-            node.removeFromParent()
-        })
+        self.enumerateChildNodes(
+            withName: "pageNums",
+            using: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                node.removeFromParent()
+            }
+        )
         
-        self.addChild(self.helpers.createLabel(String(format:"Page %i of %i", self.currentPage, self.totalPages), fontSize: 10, position: CGPointMake(CGRectGetMidY(self.frame)+500, CGRectGetMidY(self.frame)-200), name: "pageNums"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: String(format:"Page %i of %i", self.currentPage, self.totalPages),
+                fontSize: 10,
+                position: CGPoint(x: self.frame.midX+500, y: self.frame.midY-200),
+                name: "pageNums"
+            )
+        )
     }
     
     func showKrazyKoalaAdInfo() {
-        self.addChild(self.helpers.createLabel("Other Games", fontSize: 36, position: CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+200), name: "help_text"))
+        self.addChild(
+            self.helpers.createLabel(
+                text: "Other Games",
+                fontSize: 36,
+                position: CGPoint(x: self.frame.midX, y: self.frame.midY+200),
+                name: "help_text"
+            )
+        )
         
         let text: [String] = [
             "Check out my other game Krazy Koala.",
@@ -310,12 +389,20 @@ class HelpScene: SKScene {
         
         var i = 0
         for line in text {
-            self.addChild(self.helpers.createLabel(String(format: line), fontSize: 24, position: CGPointMake(CGRectGetMidX(self.frame), CGFloat((Int(self.frame.height-250))-(i*30))), name: "help_text", color: SKColor.whiteColor()))
-            i++
+            self.addChild(
+                self.helpers.createLabel(
+                    text: String(format: line),
+                    fontSize: 24,
+                    position: CGPoint(x: self.frame.midX, y: CGFloat((Int(self.frame.height-250))-(i*30))),
+                    name: "help_text",
+                    color: SKColor.white
+                )
+            )
+            i+=1
         }
         
-        var node = SKSpriteNode(imageNamed:"KrazyKoala640x640.jpg")
-        node.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)-50)
+        let node = SKSpriteNode(imageNamed:"KrazyKoala640x640.jpg")
+        node.position = CGPoint(x: self.frame.midX, y: self.frame.midY-50)
         node.name = "KrazyKoala"
         node.zPosition = 100
         node.xScale = 0.6
@@ -326,15 +413,13 @@ class HelpScene: SKScene {
     
     func openAppStore() {
         let iTunesLink = "https://itunes.apple.com/us/app/krazykoala/id957148297?mt=8"
-        UIApplication.sharedApplication().openURL(NSURL(string: iTunesLink)!)
+        UIApplication.shared.openURL(NSURL(string: iTunesLink)! as URL)
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        var difficulty = ""
-        
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            let node = self.nodeAtPoint(location)
+            let location = touch.location(in:self)
+            let node = self.atPoint(location)
             var nodeName = ""
             var moveButtonPressed = false
             
@@ -343,14 +428,15 @@ class HelpScene: SKScene {
             }
             
             if nodeName == "Forward" {
-                self.helpFilePos++
+                self.helpFilePos+=1
                 moveButtonPressed = true
-                self.currentPage++
+                self.currentPage+=1
                 self.showPageNum()
-            } else if nodeName == "Back" {
-                self.helpFilePos--
+            }
+            else if nodeName == "Back" {
+                self.helpFilePos-=1
                 moveButtonPressed = true
-                self.currentPage--
+                self.currentPage-=1
                 self.showPageNum()
             }
             
@@ -358,22 +444,27 @@ class HelpScene: SKScene {
                 if self.helpFilePos == 0 {
                     self.removeHelpFileNodes()
                     self.showFirstHelpFile()
-                } else if self.helpFilePos == 1 {
+                }
+                else if self.helpFilePos == 1 {
                     self.removeHelpFileNodes()
                     self.showSecondHelpFile()
-                } else if self.helpFilePos == 2 {
+                }
+                else if self.helpFilePos == 2 {
                     self.removeHelpFileNodes()
                     self.showKrazyKoalaAdInfo()
-                } else if self.helpFilePos == 3 {
+                }
+                else if self.helpFilePos == 3 {
                     self.removeHelpFileNodes()
                     self.showThirdHelpFile()
-                } else {
+                }
+                else {
                     // go back to start menu
                     let startScene = StartScene(size: self.size, controller: self.controller)
-                    startScene.scaleMode = .AspectFill
+                    startScene.scaleMode = .aspectFill
                     self.view?.presentScene(startScene)
                 }
-            } else {
+            }
+            else {
                 if nodeName == "KrazyKoala" {
                     self.openAppStore()
                 }

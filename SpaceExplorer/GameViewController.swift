@@ -27,27 +27,29 @@ import iAd
 
 class GameViewController: UIViewController, ADBannerViewDelegate {
     var iAdError = false
-    var adBannerView: ADBannerView?
+    //var adBannerView: ADBannerView?
     var isLoadingiAd = false
     var currentSceneName: String = ""
     
+    /*
     func loadAds() {
         self.isLoadingiAd = true
         
         let adBannerView = ADBannerView()
         adBannerView.center = CGPoint(x: view.bounds.size.width/2, y: view.bounds.size.height - adBannerView.frame.size.height / 2)
         adBannerView.delegate = self
-        adBannerView.hidden = true
+        adBannerView.isHidden = true
         view.addSubview(adBannerView)
         
         self.adBannerView = adBannerView
     }
-
+    */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.loadAds()
-        self.adBannerView?.hidden = true
+        //self.loadAds()
+        //self.adBannerView?.isHidden = true
         
         // Configure the view.
         let skView = self.view as! SKView
@@ -55,16 +57,16 @@ class GameViewController: UIViewController, ADBannerViewDelegate {
         //skView.showsNodeCount = true
         //skView.showsPhysics = true
         
-        /* Sprite Kit applies additional optimizations to improve rendering performance */
+        // Sprite Kit applies additional optimizations to improve rendering performance
         skView.ignoresSiblingOrder = true
         
-        let size = CGSizeMake(1024, 768)
+        let size = CGSize(width: 1024, height: 768)
         let scene = StartScene(size: size, controller: self)
-        scene.scaleMode = .AspectFill
+        scene.scaleMode = .aspectFill
         skView.presentScene(scene)
     }
     
-    override func shouldAutorotate() -> Bool {
+    func shouldAutorotate() -> Bool {
         return true
     }
     
@@ -73,10 +75,11 @@ class GameViewController: UIViewController, ADBannerViewDelegate {
         // Release any cached data, images, etc that aren't in use.
     }
 
-    override func prefersStatusBarHidden() -> Bool {
+    func prefersStatusBarHidden() -> Bool {
         return true
     }
     
+    /*
     //iAd
     func bannerViewWillLoadAd(banner: ADBannerView!) {
         //println("bannerViewWillLoadAd")
@@ -89,27 +92,29 @@ class GameViewController: UIViewController, ADBannerViewDelegate {
         self.isLoadingiAd = false
         
         if currentSceneName != "GameScene" {
-            banner.hidden = false
-        } else {
-            banner.hidden = true // no iAds during game play
+            banner.isHidden = false
+        }
+        else {
+            banner.isHidden = true // no iAds during game play
         }
     }
     
-    func bannerViewActionDidFinish(banner: ADBannerView!) {
+    func bannerViewActionDidFinish(_ banner: ADBannerView) {
         //println("bannerViewActionDidFinish")
     }
     
-    func bannerViewActionShouldBegin(banner: ADBannerView!, willLeaveApplication willLeave: Bool) -> Bool {
+    func bannerViewActionShouldBegin(_ banner: ADBannerView, willLeaveApplication willLeave: Bool) -> Bool {
         //println("bannerViewActionShouldBegin")
         return true 
     }
     
-    func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+    func bannerView(_ banner: ADBannerView, didFailToReceiveAdWithError error: Error) {
         //println("iAd error")
         
-        banner.hidden = true
+        banner.isHidden = true
         banner.removeFromSuperview()
         self.iAdError = true
         self.isLoadingiAd = false
     }
+    */
 }

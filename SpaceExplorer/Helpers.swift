@@ -25,7 +25,7 @@ import Foundation
 import SpriteKit
 
 class Helpers {
-    func createLabel(text: String, fontSize: CGFloat, position: CGPoint, name:String="", color:SKColor=SKColor.whiteColor(), font:String="KohinoorDevanagari-Medium", zPos:CGFloat=100) -> SKLabelNode {
+    func createLabel(text: String, fontSize: CGFloat, position: CGPoint, name:String="", color:SKColor=SKColor.white, font:String="KohinoorDevanagari-Medium", zPos:CGFloat=100) -> SKLabelNode {
         let label = SKLabelNode(fontNamed: font)
         label.text = text
         label.fontColor = color
@@ -35,7 +35,8 @@ class Helpers {
         
         if name == "" {
             label.name = text
-        } else {
+        }
+        else {
             label.name = name
         }
         
@@ -43,57 +44,62 @@ class Helpers {
     }
     
     func removeNodeByName(scene: SKScene, name: String) {
-        scene.enumerateChildNodesWithName(name, usingBlock: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-            node.removeFromParent()
-        })
+        scene.enumerateChildNodes(
+            withName: name,
+            using: {(node: SKNode!, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+                node.removeFromParent()
+            }
+        )
     }
     
     func getDifficultyIndex(difficulty: String) -> String {
         if difficulty == "easy" {
             return ""
-        } else if difficulty == "medium" {
+        }
+        else if difficulty == "medium" {
             return "2"
-        } else {
+        }
+        else {
             return "3"
         }
     }
     
     func saveHighScore(score: Int, difficulty: String) {
-        var key = "highScore" + self.getDifficultyIndex(difficulty)
-        var defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(score, forKey: key)
+        let key = "highScore" + self.getDifficultyIndex(difficulty: difficulty)
+        let defaults = UserDefaults.standard
+        defaults.set(score, forKey: key)
         defaults.synchronize()
     }
     
     func saveLastScore(score: Int, difficulty: String) {
-        var key = "lastScore" + self.getDifficultyIndex(difficulty)
-        var defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setInteger(score, forKey: key)
+        let key = "lastScore" + self.getDifficultyIndex(difficulty: difficulty)
+        let defaults = UserDefaults.standard
+        defaults.set(score, forKey: key)
         defaults.synchronize()
     }
     
     func getHighScore(difficulty: String) -> Int {
-        var key = "highScore" + self.getDifficultyIndex(difficulty)
-        var defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(key)
+        let key = "highScore" + self.getDifficultyIndex(difficulty: difficulty)
+        let defaults = UserDefaults.standard
+        return defaults.integer(forKey:key)
     }
     
     func getLastScore(difficulty: String) -> Int {
-        var key = "lastScore" + self.getDifficultyIndex(difficulty)
-        var defaults = NSUserDefaults.standardUserDefaults()
-        return defaults.integerForKey(key)
+        let key = "lastScore" + self.getDifficultyIndex(difficulty: difficulty)
+        let defaults = UserDefaults.standard
+        return defaults.integer(forKey:key)
     }
     
     func clearStats() {
-        var defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         
-        defaults.setInteger(0, forKey: "highScore1")
-        defaults.setInteger(0, forKey: "highScore2")
-        defaults.setInteger(0, forKey: "highScore3")
+        defaults.set(0, forKey: "highScore1")
+        defaults.set(0, forKey: "highScore2")
+        defaults.set(0, forKey: "highScore3")
         
-        defaults.setInteger(0, forKey: "lastScore1")
-        defaults.setInteger(0, forKey: "lastScore2")
-        defaults.setInteger(0, forKey: "lastScore3")
+        defaults.set(0, forKey: "lastScore1")
+        defaults.set(0, forKey: "lastScore2")
+        defaults.set(0, forKey: "lastScore3")
         
         defaults.synchronize()
     }
